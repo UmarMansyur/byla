@@ -28,7 +28,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/admin/merchant">
+                <a class="nav-link" href="/admin/merchants">
                   <span class="nav-icon">
                     <i class="bx bx-store"></i>
                   </span>

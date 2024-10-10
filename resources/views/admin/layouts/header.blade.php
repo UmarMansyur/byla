@@ -145,7 +145,6 @@
             </div>
           </div>
         </div>
-        <!-- User -->
         <div class="dropdown topbar-item">
           <a type="button" class="topbar-button" id="page-header-user-dropdown" data-bs-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -154,7 +153,6 @@
             </span>
           </a>
           <div class="dropdown-menu dropdown-menu-end">
-            <!-- item-->
             <h6 class="dropdown-header">Selamat datang {{ Auth::guard('admin')->user()->name }}!</h6>
             <a class="dropdown-item" href="pages-profile.html">
               <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span

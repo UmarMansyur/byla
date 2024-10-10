@@ -20,4 +20,14 @@ class Transaction extends Model
     {
         return $this->belongsTo(Merchant::class);
     }
+
+    public function buyer()
+    {
+        return $this->belongsTo(User::class, 'buyer_id');
+    }
+
+    public function detail()
+    {
+        return $this->hasMany(DetailTransaction::class);
+    }
 }
