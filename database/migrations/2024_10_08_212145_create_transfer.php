@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('merchant_id')->constrained('merchants');
             $table->string('rekening');
             $table->string('status');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }

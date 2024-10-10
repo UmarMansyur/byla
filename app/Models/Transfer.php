@@ -9,5 +9,5 @@ class Transfer extends Model
 {
     use HasFactory;
     protected $table = 'transfers';
-    protected $fillable = ['saldo_id', 'kode_transfer', 'merchant_id', 'rekening', 'status'];
+    protected $fillable = ['saldo_id', 'kode_transfer', 'merchant_id', 'rekening', 'status', 'message'];
 }

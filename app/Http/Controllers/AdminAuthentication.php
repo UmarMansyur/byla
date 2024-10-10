@@ -51,4 +51,10 @@ class AdminAuthentication extends Controller
             return redirect()->back();
         }
     }
+
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
+    }
 }

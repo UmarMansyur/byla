@@ -8,8 +8,7 @@
       <div class="card-body">
         <div class="d-flex align-items-center gap-2 mb-3">
           <div class="avatar-md bg-primary bg-opacity-10 rounded">
-            <iconify-icon icon="solar:merchants-group-two-rounded-bold-duotone" class="fs-32 text-primary avatar-title">
-            </iconify-icon>
+            <i class="bx bx-store fs-32 text-primary avatar-title"></i>
           </div>
           <div>
             <h4 class="mb-0">Semua Merchant</h4>
@@ -28,8 +27,7 @@
       <div class="card-body">
         <div class="d-flex align-items-center gap-2 mb-3">
           <div class="avatar-md bg-primary bg-opacity-10 rounded">
-            <iconify-icon icon="solar:women-outline" class="fs-32 text-primary avatar-title">
-            </iconify-icon>
+            <i class="bx bx-check-shield fs-32 text-primary avatar-title"></i>
           </div>
           <div>
             <h4 class="mb-0">Merchant Aktif</h4>
@@ -48,8 +46,7 @@
       <div class="card-body">
         <div class="d-flex align-items-center gap-2 mb-3">
           <div class="avatar-md bg-primary bg-opacity-10 rounded">
-            <iconify-icon icon="solar:user-check-broken" class="fs-32 text-primary avatar-title">
-            </iconify-icon>
+            <i class="bx bx-shield-x fs-32 text-primary avatar-title"></i>
           </div>
           <div>
             <h4 class="mb-0">Merchant Tidak Aktif</h4>
@@ -73,7 +70,7 @@
         </div>
         <div>
           <a href="{{ route('admin.merchants.add') }}" class="btn btn-primary d-flex align-items-center gap-2">
-            <iconify-icon icon="solar:user-plus-bold-duotone" class="fs-20"></iconify-icon>
+            <i class="bx bx-store fs-20"></i>
             Tambah Merchant
           </a>
         </div>
@@ -115,16 +112,12 @@
       },
       columns: [
         { 
-          data: 'user_code',
-          render: function(data, type, row) {
-            return `<span class="badge bg-primary">${data}</span>`;
-          }
-
+          data: 'user',
          },
          { data: 'merchant_code' },
         { data: 'name' },
         { data: 'address' },
-        { data: 'is_active' },
+        { data: 'is_verified' },
         { data: 'action', orderable: false, searchable: false, className: 'text-center' },
       ],
       rowCallback: function(row, data) {
@@ -145,7 +138,7 @@
       cancelButtonText: 'Batal',
     }).then((result) => {
     $.ajax({
-      url: "/admin/delete/merchants/"+id,
+      url: "/admin/merchants/delete/"+id,
       type: "GET",
       data: {
         _token: "{{ csrf_token() }}",
@@ -158,9 +151,9 @@
           icon: 'success',
           showConfirmButton: false,
           timer: 1500
-        });
-      }
-    });
+          });
+        }
+      });
     });
   }
 
