@@ -5,7 +5,15 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
+            refresh: [
+                'resources/views/**/*.blade.php',
+                'app/**/*.php',
+                'config/**/*.php',
+                'routes/**/*.php',
+                'app/Http/Controllers/**/*.php',
+                'app/Models/**/*.php',
+                'app/Http/Services/**/*.php',
+            ],
         }),
     ],
 });

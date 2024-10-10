@@ -1,0 +1,121 @@
+/* Buat datatable saya menjadi bagus dan rapi */
+.dt-search input {
+  border-radius: 0.25rem !important;
+  border: 1px solid #dee2e6 !important;
+  background-color: #fff !important;
+  outline: none !important;
+  margin-right: 1rem !important;
+}
+
+.dt-search input:focus {
+  outline: none !important;
+
+}
+
+.dt-length select {
+  border-radius: 0.25rem !important;
+  border: 1px solid #dee2e6 !important;
+  background-color: #fff !important;
+  outline: none !important;
+  margin: 0.25rem !important;
+  padding: 0.25rem !important;
+}
+
+.dt-length select:focus {
+  outline: none !important;
+}
+
+.dt-length label {
+  margin-left: 1rem !important;
+}
+
+.dt-search input::placeholder {
+  color: #6c7273 !important;
+}
+
+
+table.dataTable > thead > tr > td {
+  padding-top: 1rem !important;
+  border-bottom: none !important;
+}
+
+table.dataTable > thead > tr > th {
+  padding-top: 1rem !important;
+  border-bottom: none !important;
+}
+
+table.dataTable > tbody > tr > td {
+  padding-top: 1rem !important;
+  border-bottom: none !important;
+}
+table.dataTable > thead > tr > th:hover {
+  border: none !important;
+  padding-top: 1rem !important;
+  border-bottom: none !important;
+}
+
+table.dataTable > tbody > tr > td:hover {
+  border: none !important;
+  padding-top: 1rem !important;
+  border-bottom: none !important;   
+}
+
+table.dataTable > tbody > tr > td:first-child {
+  padding-left: 1rem !important;
+}
+
+table.dataTable > tbody > tr > td:last-child {
+  padding-right: 1rem !important;
+}
+
+table.dataTable > thead:hover {
+  background-color: #f5f5f5 !important;
+  border: none !important;
+}
+
+.dt-paging-button {
+  outline: none !important;
+  border: none !important;
+  background-color: #fff !important;
+  color: #fff !important;
+  border-radius: 0.25rem !important;
+}
+
+.dt-paging-button:focus {
+  outline: none !important;
+  border: none !important;
+  background-color: #fff !important;
+  color: #fff !important;
+  background: #ff6c2f !important;
+}
+
+
+
+.dt-paging-button:hover {
+  border: none !important;
+  background-color: #f5f5f5 !important;
+  background: #ff6c2f !important;
+  color: white !important;
+  border-radius: 0.25rem !important;
+  border: none !important;
+}
+
+.dt-paging-button.current {
+  border-radius: 0.25rem !important;
+  border: none !important;
+  background: #ff6c2f !important;
+  color: white !important;
+}
+
+.dt-paging-button.current:hover {
+  background: #ff6c2f !important;
+  color: white !important;
+}
+
+
+div.dt-container .dt-paging .dt-paging-button.current, div.dt-container .dt-paging .dt-paging-button.current:hover {
+  color: white !important;
+}
+div.dt-container .dt-paging .dt-paging-button.current, div.dt-container .dt-paging .dt-paging-button.current:focus {
+  color: white !important;
+}

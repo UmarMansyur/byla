@@ -12,6 +12,9 @@ class AdminAuthentication extends Controller
 {
     public function login_page()
     {
+        if(Auth::guard('admin')->user()) {
+            return redirect()->route('admin.dashboard');
+        }
         return view('admin.auth.login');
     }
 
@@ -22,18 +25,24 @@ class AdminAuthentication extends Controller
                 'username' => 'required',
                 'password' => 'required',
             ]);
+
+
+
             $user = Admin::where('username', $request->username)->first();
             if (!$user) {
                 notify()->error('Username tidak ditemukan!');
                 return redirect()->back();
             }
+
             if (!Hash::check($request->password, $user->password)) {
                 notify()->error('Username atau password salah!');
                 return redirect()->back();
             }
+
             if (Auth::guard('admin')->attempt($request->only('username', 'password'))) {
                 return redirect()->route('admin.dashboard');
             }
+
             notify()->error('Username atau password salah!');
             return redirect()->back();
         } catch (\Throwable $th) {

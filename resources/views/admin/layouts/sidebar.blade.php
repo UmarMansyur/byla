@@ -20,7 +20,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/admin/pengguna">
+                <a class="nav-link" href="/admin/users">
                   <span class="nav-icon">
                     <i class="bx bx-user"></i>
                   </span>

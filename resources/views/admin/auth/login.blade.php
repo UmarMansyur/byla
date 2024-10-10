@@ -18,8 +18,9 @@
 </head>
 
 <body class="h-100">
-  <x-notify::notify />
-
+  <div class="relative" style="z-index: 10000 !important;">
+    <x-notify::notify />
+  </div>
   <div class="d-flex flex-column h-100 p-3">
     <div class="d-flex flex-column flex-grow-1">
       <div class="row justify-content-center align-items-center h-100">

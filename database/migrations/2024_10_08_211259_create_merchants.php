@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string('merchant_code')->unique();
+            $table->string('name');
             $table->string('address');
             $table->string('is_verified')->default(false);
             $table->dateTime('verified_at')->nullable();

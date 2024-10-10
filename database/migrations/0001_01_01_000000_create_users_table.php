@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->text('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

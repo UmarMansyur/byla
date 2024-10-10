@@ -3,19 +3,30 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Dashboard | Larkon - Responsive Admin Dashboard Template</title>
+  <title>@yield('title-bar') | Larkon - Responsive Admin Dashboard Template</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A fully responsive premium admin dashboard template" />
   <meta name="author" content="Techzaa" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <link rel="shortcut icon" href="/admin/images/only-logo.svg">
+  @notifyCss  
+  <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.min.css
+" rel="stylesheet">
   <link href="/admin/css/vendor.min.css" rel="stylesheet" type="text/css" />
   <link href="/admin/css/icons.min.css" rel="stylesheet" type="text/css" />
   <link href="/admin/css/app.min.css" rel="stylesheet" type="text/css" />
   <script src="/admin/js/config.js"></script>
+  @vite('resources/js/app.js')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.54.0/apexcharts.min.css" integrity="sha512-a+TagZggv1pq6n/4xBSDjlpi8MQMsH0OAF2rlFOKifNKlAjk30uAg/EJeRBuL76Zq4dYLHa0ezegidxDgHzjMA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+  <link rel="stylesheet" href="/admin/css/datatable.min.css">
 </head>
 
 <body>
+  <div class="relative" style="z-index: 10000 !important;">
+    <x-notify::notify />
+  </div>
   <div class="wrapper">
     @include('admin.layouts.header')
     <div>
@@ -204,14 +215,11 @@
           <img src="/admin/only-logo.svg" class="logo-sm" alt="logo sm">
           <img src="/admin/logo.svg" class="logo-lg" alt="logo dark">
         </a>
-
         <a href="index.html" class="logo-light">
           <img src="/admin/only-logo.svg" class="logo-sm" alt="logo sm">
           <img src="/admin/logo.svg" class="logo-lg" alt="logo light">
         </a>
       </div>
-
-      <!-- Menu Toggle Button (sm-hover) -->
       <button type="button" class="button-sm-hover" aria-label="Show Full Sidebar">
         <iconify-icon icon="solar:double-alt-arrow-right-bold-duotone" class="button-sm-hover-icon"></iconify-icon>
       </button>
@@ -231,19 +239,15 @@
           </div>
         </div>
       </footer>
-      <!-- ========== Footer End ========== -->
-
     </div>
-    <!-- ==================================================== -->
-    <!-- End Page Content -->
-    <!-- ==================================================== -->
-
   </div>
+  @notifyJs
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
   <script src="/admin/js/vendor.js"></script>
   <script src="/admin/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.54.0/apexcharts.min.js" integrity="sha512-fsEkf13FMKFZJA3KF4dm/lzU8si2ZXSXwc35yjU+kP0VJiLkbmIBpqIq+4EWcoOO12+UZ1klbynmnjMqFADqUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  @stack('script')
 </body>
-
-
-<!-- Mirrored from techzaa.in/larkon/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 08 Oct 2024 22:18:59 GMT -->
-
 </html>

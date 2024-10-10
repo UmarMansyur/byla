@@ -7,12 +7,13 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminDashboard extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $total_users = User::count();
-        // total persentase kenaikan user bulan lalu dibandingkan dengan bulan sekarang
         $total_users_percentage = User::whereMonth('created_at', date('m'))->count() - User::whereMonth('created_at', date('m') - 1)->count();
         $total_transactions = Transaction::count();
         $total_transactions_percentage = Transaction::whereMonth('created_at', date('m'))->count() - Transaction::whereMonth('created_at', date('m') - 1)->count();
@@ -30,6 +31,18 @@ class AdminDashboard extends Controller
             ? (($total_revenue - $last_month_revenue) / $last_month_revenue) * 100
             : 0;
 
-        return view('admin.dashboard.index', compact('total_users', 'total_users_percentage', 'total_transactions', 'total_transactions_percentage', 'total_merchants', 'total_merchants_percentage', 'total_revenue', 'total_revenue_percentage'));
+        $data_transaction_chart = [];
+        for ($i = 1; $i <= 12; $i++) {
+            array_push($data_transaction_chart, [
+                'month' => $i,
+                'nominal' => Transaction::where('status', 'success')
+                    ->whereMonth('created_at', $i)
+                    ->sum('nominal')
+            ]);
+        }
+
+        $history_transaction = Transaction::with(['user', 'merchant'])->get();
+
+        return view('admin.dashboard.index', compact('total_users', 'total_users_percentage', 'total_transactions', 'total_transactions_percentage', 'total_merchants', 'total_merchants_percentage', 'total_revenue', 'total_revenue_percentage', 'data_transaction_chart', 'history_transaction'));
     }
 }

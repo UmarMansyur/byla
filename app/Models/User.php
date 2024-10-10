@@ -29,6 +29,7 @@ class User extends Authenticatable
         'address',
         'email_verified_at',
         'remember_token',
+        'is_active',
     ];
 
     /**
@@ -52,5 +53,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 }
