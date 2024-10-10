@@ -123,7 +123,6 @@
                 <th>Kode Pengguna</th>
                 <th>Thumbnail</th>
                 <th>Nama Pengguna</th>
-                <th>Username</th>
                 <th>Email</th>
                 <th>No. Telpon</th>
                 <th>Jenis Kelamin</th>
@@ -163,7 +162,6 @@
          },
          { data: 'thumbnail' },
         { data: 'name' },
-        { data: 'username' },
         { data: 'email' },
         { data: 'phone' },
         { data: 'gender' },

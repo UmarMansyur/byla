@@ -17,14 +17,6 @@
                             <label for="name" class="form-label">Nama Lengkap: <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control" id="name" value="{{ old('name', isset($user) ? $user->name : '') }}" required>
                         </div>
-
-                      
-                        <!-- Username -->
-                        <div class="form-group mb-3">
-                            <label for="username" class="form-label">Username: <span class="text-danger">*</span></label>
-                            <input type="text" name="username" class="form-control" id="username" value="{{ old('username', isset($user) ? $user->username : '') }}" required>
-                        </div>
-
                         @if(!isset($user))
                         <div class="form-group mb-3">
                             <label for="password" class="form-label">Password: <span class="text-danger">*</span></label>

@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'gender' => 'male',
             'address' => 'Jl. Admin',
         ]);
-        User::factory(100)->create();
+        User::factory(10)->create();
         
     }
 }

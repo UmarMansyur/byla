@@ -37,7 +37,10 @@
           </div>
         </a>
         <div class="d-flex align-items-center gap-4">
-          <a href="#" id="btn-popup-up" class="icon-notification1"><span>2</span></a>
+          <a href="#" id="btn-popup-up" class="icon-notification1 me-2"><span>2</span></a>
+          <a href="{{ route('Logout Pengguna') }}" style="color: white; font-size: 28px;">
+            <i class="bx bx-power-off"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -286,40 +289,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modalhome2">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="heading">
-          <h2>Privacy</h2>
-          <p class="mt-1 fw_3">
-            A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to by all
-            users. It must disclose how a mobile app gathers, stores, and uses the personally identifiable information
-            it collects from its users.
-            A mobile privacy app is developed and presented to users so that mobile app developers stay compliant with
-            state, federal, and international laws. As a result, they fulfill the legal requirement to safeguard user
-            privacy while protecting the company itself from legal challenges.
 
-          </p>
-          <h2 class="mt-3">Authorized Users</h2>
-          <p class="fw-3">
-            A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to by all
-            users. It must disclose how a mobile app gathers, stores, and uses the personally identifiable information
-            it collects from its users.
-          </p>
-          <div class="group-cb mt-3 align-items-center">
-            <div class="cb">
-              <input type="checkbox" class="tf-checkbox st1" checked>
-            </div>
-            <span class="fw_3">I agree to the Term of sevice and Privacy policyy</span>
-          </div>
-
-        </div>
-        <div class="bottom mt-5">
-          <a href="#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="tf-panel up">
     <div class="panel-box panel-up panel-noti">
       <div class="header is-fixed">

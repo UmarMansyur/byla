@@ -24,14 +24,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $randomNumber = fake()->unique()->numberBetween(1, 999);
+        $name = fake()->name();
         return [
-            'name' => fake()->name(),
-            'user_code' => fake()->unique()->numerify('P00'.$randomNumber),
-            'username' => fake()->unique()->userName(),
+            'name' => $name,
+            'user_code' => fake()->unique()->numerify('By'.$randomNumber),
             'password' => Hash::make('pengguna'),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),
-            'thumbnail' => fake()->imageUrl(),
+            'thumbnail' => "https://ui-avatars.com/api/?name=" . $name . "&background=random",
             'birthday' => fake()->date(),
             'gender' => fake()->randomElement(['male', 'female']),
             'is_active' => fake()->boolean(),

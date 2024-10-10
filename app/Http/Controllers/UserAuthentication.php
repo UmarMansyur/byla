@@ -2,30 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ForgotPassword;
+use App\Mail\VerifyEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Laravel\Socialite\Facades\Socialite;
 
 class UserAuthentication extends Controller
 {
-    public function login_page(){
+    public function login_page()
+    {
         return view('pengguna.auth.login');
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         try {
             $request->validate([
-                'username' => 'required',
+                'email' => 'required|email',
                 'password' => 'required',
             ]);
 
-            $user = User::where('username', $request->username)->first();
+            $user = User::where('email', $request->email)->first();
             if (!$user) {
                 return back()->with('error', 'Pengguna tidak ditemukan!');
             }
 
-            if(Auth::attempt($request->only('username', 'password'))){
+            if (!$user->is_active) {
+                $payload = [
+                    'email' => $user->email,
+                    'expired_at' => now()->addMinutes(10),
+                ];
+
+                $token = Crypt::encryptString(json_encode($payload));
+                $url = env('APP_URL') . '/verify-email?token=' . $token;
+                Mail::to($user->email)->send(new VerifyEmail($user->email, $url));
+                return back()->with('error', 'Akun anda belum aktif. Silahkan cek email anda untuk aktivasi akun.');
+            }
+
+            if ($user->type_login === 'google') {
+                return back()->with('error', 'Akun anda login dengan Google. Silahkan login dengan Google.');
+            }
+
+            if (Auth::attempt($request->only('email', 'password'))) {
                 return redirect()->route('home');
             }
 
@@ -35,15 +58,16 @@ class UserAuthentication extends Controller
         }
     }
 
-    public function register_page() {
+    public function register_page()
+    {
         return view('pengguna.auth.register');
     }
 
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         try {
             $request->validate([
                 'name' => 'required',
-                'username' => 'required|unique:users',
                 'password' => 'required|min:8',
                 'email' => 'required|email|unique:users',
                 'phone' => 'required|numeric',
@@ -51,21 +75,166 @@ class UserAuthentication extends Controller
                 'gender' => 'required',
                 'address' => 'required',
             ]);
+
+            if ($request->password !== $request->password_confirmation) {
+                return back()->with('error', 'Password tidak sama!');
+            }
+
             $data = $request->only('name', 'username', 'password', 'email', 'phone', 'birthday', 'gender', 'address');
             $data['password'] = Hash::make($data['password']);
-            $data['user_code'] = 'USR-' . mt_rand(0000, 9999);
-            while(User::where('user_code', $data['user_code'])->exists()){
-                $data['user_code'] = 'USR-' . mt_rand(0000, 9999);
+            $data['user_code'] = 'By-' . mt_rand(0000, 9999);
+            $data['thumbnail'] = "https://ui-avatars.com/api/?name=" . $data['name'] . "&background=random";
+
+            while (User::where('user_code', $data['user_code'])->exists()) {
+                $data['user_code'] = 'By-' . mt_rand(0000, 9999);
             }
+
             $data['is_active'] = false;
-            User::create($data);
-            return redirect()->route('login')->with('success', 'Pendaftaran Berhasil!');
+            $user = User::create($data);
+
+            $payload = [
+                'email' => $user->email,
+                'expired_at' => now()->addMinutes(10),
+            ];
+
+            $token = Crypt::encryptString(json_encode($payload));
+            $url = env('APP_URL') . '/verify-email?token=' . $token;
+            Mail::to($user->email)->send(new VerifyEmail($user->email, $url));
+            return redirect()->route('Halaman Login Pengguna')->with('success', 'Pendaftaran Berhasil!. Silahkan cek email anda untuk aktivasi akun.');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
         }
     }
-    public function logout() {
+
+    public function verify_email(Request $request)
+    {
+        try {
+            $token = $request->query('token');
+
+            $payload = Crypt::decryptString($token);
+            $payload = json_decode($payload);
+            $user = User::where('email', $payload->email)->first();
+            if (!$user) {
+                return redirect()->route('Halaman Login Pengguna')->with('error', 'Pengguna tidak ditemukan!');
+            }
+
+            if ($payload->expired_at < now()) {
+                return redirect()->route('Halaman Login Pengguna')->with('error', 'Token Kadaluarsa!');
+            }
+
+            $user->update(['is_active' => true]);
+            return redirect()->route('Halaman Login Pengguna')->with('success', 'Verifikasi Berhasil!');
+        } catch (\Throwable $th) {
+            return redirect()->route('Halaman Login Pengguna')->with('error', $th->getMessage());
+        }
+    }
+
+    public function login_google()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handle_google_callback()
+    {
+        $user = Socialite::driver('google')->user();
+        $exist = User::where('email', $user->email)->first();
+
+        if ($exist) {
+            Auth::login($exist);
+            return redirect()->route('home');
+        }
+
+        $newUser = User::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => Hash::make($user->id),
+            'thumbnail' => $user->avatar,
+            'is_active' => true,
+            'user_code' => 'By-' . mt_rand(0000, 9999),
+            'type_login' => 'google',
+        ]);
+
+        Auth::login($newUser);
+        return redirect()->route('home');
+    }
+
+    public function forgot_password_page()
+    {
+        return view('pengguna.auth.forgot-password');
+    }
+
+    public function forgot_password(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email',
+            ]);
+
+            $user = User::where('email', $request->email)->first();
+            if (!$user) {
+                return back()->with('error', 'Pengguna tidak ditemukan!');
+            }
+
+            if ($user->type_login === 'google') {
+                return back()->with('error', 'Akun anda login dengan Google. Silahkan reset password dengan menggunakan akun Google anda!.');
+            }
+
+            $payload = [
+                'email' => $user->email,
+                'expired_at' => now()->addMinutes(10),
+            ];
+
+            $token = Crypt::encryptString(json_encode($payload));
+            $url = env('APP_URL') . '/reset-password?token=' . $token;
+            Mail::to($user->email)->send(new ForgotPassword($user->email, $url));
+            return back()->with('success', 'Silahkan cek email anda untuk reset password!');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+    }
+
+    public function reset_password_page()
+    {
+        return view('pengguna.auth.reset-password');
+    }
+
+    public function reset_password(Request $request)
+    {
+        try {
+            $token = $request->token;
+            // dd($token);
+            $payload = Crypt::decryptString($token);
+            $payload = json_decode($payload);
+
+            dd($payload);
+
+            if ($payload->expired_at < now()) {
+                return redirect()->route('Halaman Login Pengguna')->with('error', 'Token Kadaluarsa!');
+            }
+
+            // dd($payload->email);
+
+            $user = User::where('email', $payload->email)->first();
+
+            if (!$user) {
+                return redirect()->route('Halaman Login Pengguna')->with('error', 'Pengguna tidak ditemukan!');
+            }
+
+            $request->validate([
+                'password' => 'required|min:8',
+                'password_confirmation' => 'required|same:password',
+            ]);
+
+            $user->update(['password' => Hash::make($request->password)]);
+            return redirect()->route('Halaman Login Pengguna')->with('success', 'Reset Password Berhasil!');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+    }
+
+    public function logout()
+    {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('Halaman Login Pengguna');
     }
 }

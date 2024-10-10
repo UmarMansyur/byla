@@ -249,14 +249,14 @@
         $(".scan").addClass("panel-open");
       }, 0);
     }
-    if ($("#modalhome1").length > 0) {
-      let showPopup = sessionStorage.getItem("showPopup");
-      if (!JSON.parse(showPopup)) {
-        setTimeout(function () {
-          $("#modalhome1").modal('show');
-        }, 3000);
-      }
-    }
+    // if ($("#modalhome1").length > 0) {
+    //   let showPopup = sessionStorage.getItem("showPopup");
+    //   if (!JSON.parse(showPopup)) {
+    //     setTimeout(function () {
+    //       $("#modalhome1").modal('show');
+    //     }, 3000);
+    //   }
+    // }
   };
    /* hide popup 
   ------------------------------------------------------------------------------------- */

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('user_code')->unique();
-            $table->string('username')->unique();
             $table->string('password');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
@@ -23,6 +22,7 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->text('address')->nullable();
+            $table->enum('type_login', ['email', 'google'])->default('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_active')->default(false);
             $table->rememberToken();

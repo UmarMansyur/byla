@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\BankAdmin;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\UserAuthentication;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,21 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function(){
     Route::get('/merchants/delete/{id}', [MerchantController::class, 'delete'])->name('admin.merchant.delete');
 });
 
-Route::get('/', [HomeController::class, 'index'])->name('user.home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/bank', [BankAdmin::class, 'list_bank'])->name('List Bank');
+Route::get('/login', [UserAuthentication::class, 'login_page'])->name('Halaman Login Pengguna');
+Route::post('/login', [UserAuthentication::class, 'login'])->name('Login Pengguna');
+Route::get('/register', [UserAuthentication::class, 'register_page'])->name('Halaman Register Pengguna');
+Route::post('/register', [UserAuthentication::class, 'register'])->name('Register Pengguna');
+
+Route::get('/verify-email', [UserAuthentication::class, 'verify_email'])->name('Verify Email');
+Route::get('/login-google', [UserAuthentication::class, 'login_google'])->name('Login Google');
+Route::get('/auth/google/callback', [UserAuthentication::class, 'handle_google_callback'])->name('Google Callback');
+Route::get('/logout', [UserAuthentication::class, 'logout'])->name('Logout Pengguna');
+
+Route::get('/forgot-password', [UserAuthentication::class, 'forgot_password_page'])->name('Forgot Password Page');
+Route::post('/forgot-password', [UserAuthentication::class, 'forgot_password'])->name('Forgot Password');
+
+Route::get('/reset-password', [UserAuthentication::class, 'reset_password_page'])->name('Reset Password Page');
+Route::post('/reset-password', [UserAuthentication::class, 'reset_password'])->name('Reset Password');
