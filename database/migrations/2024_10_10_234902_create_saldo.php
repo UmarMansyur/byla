@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_wallet', function (Blueprint $table) {
+        Schema::create('saldo', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->double('kredit');
-            $table->double('debit');
+            $table->string('pin');
             $table->double('saldo');
-            $table->enum('type', ['kredit', 'debit']);
-            $table->enum('status', ['pending', 'success', 'failed']);
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_wallet');
+        Schema::dropIfExists('saldo');
     }
 };

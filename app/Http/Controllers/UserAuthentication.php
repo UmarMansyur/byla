@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Mail\ForgotPassword;
 use App\Mail\VerifyEmail;
+use App\Models\Saldo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
@@ -66,6 +68,7 @@ class UserAuthentication extends Controller
     public function register(Request $request)
     {
         try {
+            DB::beginTransaction();
             $request->validate([
                 'name' => 'required',
                 'password' => 'required|min:8',
@@ -75,33 +78,29 @@ class UserAuthentication extends Controller
                 'gender' => 'required',
                 'address' => 'required',
             ]);
-
             if ($request->password !== $request->password_confirmation) {
                 return back()->with('error', 'Password tidak sama!');
             }
-
             $data = $request->only('name', 'username', 'password', 'email', 'phone', 'birthday', 'gender', 'address');
             $data['password'] = Hash::make($data['password']);
             $data['user_code'] = 'By-' . mt_rand(0000, 9999);
             $data['thumbnail'] = "https://ui-avatars.com/api/?name=" . $data['name'] . "&background=random";
-
             while (User::where('user_code', $data['user_code'])->exists()) {
                 $data['user_code'] = 'By-' . mt_rand(0000, 9999);
             }
-
             $data['is_active'] = false;
             $user = User::create($data);
-
             $payload = [
                 'email' => $user->email,
                 'expired_at' => now()->addMinutes(10),
             ];
-
             $token = Crypt::encryptString(json_encode($payload));
             $url = env('APP_URL') . '/verify-email?token=' . $token;
+            DB::commit();
             Mail::to($user->email)->send(new VerifyEmail($user->email, $url));
             return redirect()->route('Halaman Login Pengguna')->with('success', 'Pendaftaran Berhasil!. Silahkan cek email anda untuk aktivasi akun.');
         } catch (\Throwable $th) {
+            DB::rollBack();
             return back()->with('error', $th->getMessage());
         }
     }
@@ -136,26 +135,32 @@ class UserAuthentication extends Controller
 
     public function handle_google_callback()
     {
-        $user = Socialite::driver('google')->user();
-        $exist = User::where('email', $user->email)->first();
+        try {
+            DB::beginTransaction();
+            $user = Socialite::driver('google')->user();
+            $exist = User::where('email', $user->email)->first();
 
-        if ($exist) {
-            Auth::login($exist);
+            if ($exist) {
+                Auth::login($exist);
+                return redirect()->route('home');
+            }
+            $newUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => Hash::make($user->id),
+                'thumbnail' => $user->avatar,
+                'is_active' => true,
+                'user_code' => 'By-' . mt_rand(0000, 9999),
+                'type_login' => 'google',
+            ]);
+
+            DB::commit();
+            Auth::login($newUser);
             return redirect()->route('home');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route('Halaman Login Pengguna')->with('error', $th->getMessage());
         }
-
-        $newUser = User::create([
-            'name' => $user->name,
-            'email' => $user->email,
-            'password' => Hash::make($user->id),
-            'thumbnail' => $user->avatar,
-            'is_active' => true,
-            'user_code' => 'By-' . mt_rand(0000, 9999),
-            'type_login' => 'google',
-        ]);
-
-        Auth::login($newUser);
-        return redirect()->route('home');
     }
 
     public function forgot_password_page()
@@ -202,7 +207,6 @@ class UserAuthentication extends Controller
     {
         try {
             $token = $request->token;
-            // dd($token);
             $payload = Crypt::decryptString($token);
             $payload = json_decode($payload);
 
@@ -211,9 +215,6 @@ class UserAuthentication extends Controller
             if ($payload->expired_at < now()) {
                 return redirect()->route('Halaman Login Pengguna')->with('error', 'Token Kadaluarsa!');
             }
-
-            // dd($payload->email);
-
             $user = User::where('email', $payload->email)->first();
 
             if (!$user) {
