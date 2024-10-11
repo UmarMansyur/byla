@@ -16,9 +16,8 @@
   <!-- Icons -->
   <link rel="stylesheet" href="/assets/fonts/icons-alipay.css">
   <link rel="stylesheet" href="/assets/styles/bootstrap.css">
-  @vite('resources/css/app.js')
+  {{-- @vite('resources/js/app.js') --}}
   <link rel="stylesheet" type="text/css" href="/assets/styles/styles.css" />
-  <link rel="manifest" href="/assets/manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
   <link rel="apple-touch-icon" sizes="192x192" href="/assets/images/logo.png">
 </head>
 

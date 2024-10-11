@@ -14,4 +14,9 @@ class Saldo extends Model
         'pin',
         'saldo',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

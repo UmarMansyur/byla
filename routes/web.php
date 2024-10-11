@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\BankAdmin;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\UserAuthentication;
 use App\Http\Controllers\UserController;
@@ -58,4 +59,11 @@ Route::post('/reset-password', [UserAuthentication::class, 'reset_password'])->n
 Route::group(['middleware' => 'user'], function(){
     Route::get('/pin', [SaldoController::class, 'pin_page'])->name('pin');
     Route::post('/pin', [SaldoController::class, 'pin_store'])->name('Save PIN');
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('Profile Page');
+    Route::get('/profile/detail', [ProfileController::class, 'detail'])->name('Profile Detail Page');
+    Route::get('/profile/update', [ProfileController::class, 'update_page'])->name('Profile Update Page');
+    Route::put('/profile/update', [ProfileController::class, 'update_profile'])->name('Profile Update');
+    Route::get('/my-qrcode', [SaldoController::class, 'my_qrCode'])->name('My QR Code Page');
+    Route::get('/scan-qr', [SaldoController::class, 'scan_qr_page'])->name('Scan QR Page');
 });

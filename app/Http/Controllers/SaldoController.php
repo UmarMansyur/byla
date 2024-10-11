@@ -7,6 +7,7 @@ use App\Models\Saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class SaldoController extends Controller
 {
@@ -33,6 +34,7 @@ class SaldoController extends Controller
             }
 
             $saldo = Saldo::where('user_id', Auth::user()->id)->first();
+            
             if (!$saldo) {
                 $saldo = Saldo::create([
                     'user_id' => Auth::user()->id,
@@ -41,15 +43,18 @@ class SaldoController extends Controller
                 ]);
                 LogModel::create([
                     'user_id' => Auth::user()->id,
-                    'log' => 'Berhasil membuat saldo dan PIN',
+                    'activity' => 'create',
+                    'description' => 'Berhasil membuat saldo dan PIN',
                 ]);
             } else {
                 $saldo->update([
                     'pin' => Hash::make($request->pin),
                 ]);
+
                 LogModel::create([
                     'user_id' => Auth::user()->id,
-                    'log' => 'Berhasil mengubah PIN',
+                    'activity' => 'update',
+                    'description' => 'Berhasil mengubah PIN',
                 ]);
             }
 
@@ -57,5 +62,14 @@ class SaldoController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
+    }
+
+    public function my_qrCode() {
+        $qrcode = QrCode::size(350)->generate(Auth::user()->user_code);
+        return view('pengguna.profile.qrcode', compact('qrcode'));
+    }
+
+    public function scan_qr_page() {
+        return view('pengguna.profile.scanqr');
     }
 }

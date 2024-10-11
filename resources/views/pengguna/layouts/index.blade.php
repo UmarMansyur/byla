@@ -32,6 +32,7 @@
   <script type="text/javascript" src="{{ asset('assets/javascript/swiper-bundle.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('assets/javascript/swiper.js') }}"></script>
   <script type="text/javascript" src="{{ asset('assets/javascript/main.js') }}"></script>
+  @stack('script')
 
 </body>
 

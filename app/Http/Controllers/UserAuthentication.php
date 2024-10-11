@@ -121,7 +121,7 @@ class UserAuthentication extends Controller
                 return redirect()->route('Halaman Login Pengguna')->with('error', 'Token Kadaluarsa!');
             }
 
-            $user->update(['is_active' => true]);
+            $user->update(['is_active' => true, 'email_verified_at' => now()]);
             return redirect()->route('Halaman Login Pengguna')->with('success', 'Verifikasi Berhasil!');
         } catch (\Throwable $th) {
             return redirect()->route('Halaman Login Pengguna')->with('error', $th->getMessage());
@@ -136,13 +136,11 @@ class UserAuthentication extends Controller
     public function handle_google_callback()
     {
         try {
-            DB::beginTransaction();
             $user = Socialite::driver('google')->user();
             $exist = User::where('email', $user->email)->first();
-
             if ($exist) {
-                Auth::login($exist);
-                return redirect()->route('home');
+                Auth::guard('web')->login($exist);
+                return redirect('/');
             }
             $newUser = User::create([
                 'name' => $user->name,
@@ -152,9 +150,8 @@ class UserAuthentication extends Controller
                 'is_active' => true,
                 'user_code' => 'By-' . mt_rand(0000, 9999),
                 'type_login' => 'google',
+                'email_verified_at' => now(),
             ]);
-
-            DB::commit();
             Auth::login($newUser);
             return redirect()->route('home');
         } catch (\Throwable $th) {
@@ -209,8 +206,6 @@ class UserAuthentication extends Controller
             $token = $request->token;
             $payload = Crypt::decryptString($token);
             $payload = json_decode($payload);
-
-            dd($payload);
 
             if ($payload->expired_at < now()) {
                 return redirect()->route('Halaman Login Pengguna')->with('error', 'Token Kadaluarsa!');
