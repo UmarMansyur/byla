@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ForgotPassword;
+use App\Mail\OTP;
 use App\Mail\VerifyEmail;
 use App\Models\Saldo;
 use App\Models\User;
@@ -51,10 +52,48 @@ class UserAuthentication extends Controller
             }
 
             if (Auth::attempt($request->only('email', 'password'))) {
-                return redirect()->route('home');
+                $otp = mt_rand(100000, 999999);
+                $user->update(['otp' => $otp, 'otp_expired' => now()->addMinutes(5)]);
+                Mail::to($user->email)->send(new OTP($otp, $user->email));
+                return redirect()->route('OTP Page');
             }
 
             return back()->with('error', 'Password Salah!');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+    }
+
+    public function otp_page()
+    {
+        if (!Auth::user()) {
+            return redirect()->route('Halaman Login Pengguna');
+        }
+        return view('pengguna.auth.otp');
+    }
+
+    public function otp(Request $request)
+    {
+        try {
+            $request->validate([
+                'otp' => 'required',
+            ]);
+
+            $user = User::where('email', $request->email)->first();
+            if (!$user) {
+                return back()->with('error', 'Pengguna tidak ditemukan!');
+            }
+
+            if ($user->otp !== $request->otp) {
+                return back()->with('error', 'OTP Salah!');
+            }
+
+            if ($user->otp_expired < now()) {
+                return back()->with('error', 'OTP Kadaluarsa!');
+            }
+
+            $user->update(['otp' => null, 'otp_expired' => null]);
+            return redirect()->route('home');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
         }
@@ -84,7 +123,7 @@ class UserAuthentication extends Controller
             $data = $request->only('name', 'username', 'password', 'email', 'phone', 'birthday', 'gender', 'address');
             $data['password'] = Hash::make($data['password']);
             $data['user_code'] = 'By-' . mt_rand(0000, 9999);
-            $data['thumbnail'] = "https://ui-avatars.com/api/?name=" . $data['name'] . "&background=random";
+            $data['thumbnail'] = "https://ui-avatars.com/api/?name=" . $data['name'] . "&background=F0F0F0";
             while (User::where('user_code', $data['user_code'])->exists()) {
                 $data['user_code'] = 'By-' . mt_rand(0000, 9999);
             }

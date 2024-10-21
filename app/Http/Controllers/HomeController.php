@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Saldo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -19,6 +20,13 @@ class HomeController extends Controller
                 return redirect()->route('pin');
             }
         }
-        return view('pengguna.home.index');
+        if(Auth::user()) {
+            $notify = Notification::where('user_id', Auth::user()->id)->where('is_read', false)->count();
+            $notify_list = Notification::where('user_id', Auth::user()->id)->paginate(5);
+        } else {
+            $notify = 0;
+            $notify_list = [];
+        }
+        return view('pengguna.home.index', compact('notify', 'notify_list'));
     }
 }

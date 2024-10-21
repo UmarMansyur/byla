@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('transfers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('saldo_id')->constrained('user_wallet');
-            $table->string('kode_transfer');
-            $table->foreignId('merchant_id')->constrained('merchants');
+            $table->string('kode_bank');
             $table->string('rekening');
+            $table->string('nama');
             $table->string('status');
             $table->text('message')->nullable();
             $table->timestamps();

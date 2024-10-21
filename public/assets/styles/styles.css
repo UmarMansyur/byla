@@ -2,6 +2,14 @@
   color: #533dea;
 }
 
+#thumbnail-preview {
+  cursor: pointer;
+}
+
+#thumbnail-preview:hover {
+  background-color: #f8f8f8c0;
+}
+
 .on_surface_color {
   color: #1e1e1e;
 }
@@ -2122,8 +2130,8 @@ textarea.form-textarea[rows] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #533dea;
-  background-image: url(../app/icons/icon-96x96.png);
+  background: #ff6c2f !important;
+  background-image: url(../../images/icons/icon-96-96.png);
   background-repeat: no-repeat;
   background-position: center center;
   animation: preload 1s linear infinite alternate;

@@ -22,6 +22,8 @@ class User extends Authenticatable
         'password',
         'email',
         'phone',
+        'otp',
+        'otp_expired',
         'thumbnail',
         'birthday',
         'gender',
@@ -60,8 +62,23 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class);
     }
 
+    public function transactions_buyer()
+    {
+        return $this->hasMany(Transaction::class, 'buyer_id');
+    }
+
     public function saldo()
     {
         return $this->hasOne(Saldo::class);
+    }
+
+    public function merchant()
+    {
+        return $this->hasOne(Merchant::class);
+    }
+
+    public function wallet()
+    {
+        return $this->hasOne(UserWallet::class);
     }
 }

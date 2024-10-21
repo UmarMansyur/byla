@@ -13,7 +13,7 @@ class Transaction extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function merchant()
@@ -23,10 +23,10 @@ class Transaction extends Model
 
     public function buyer()
     {
-        return $this->belongsTo(User::class, 'buyer_id');
+        return $this->belongsTo(User::class, 'buyer_id', 'id');
     }
 
-    public function detail()
+    public function detailTransactions()
     {
         return $this->hasMany(DetailTransaction::class);
     }

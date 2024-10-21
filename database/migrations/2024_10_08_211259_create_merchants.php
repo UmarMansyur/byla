@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('merchant_code')->unique();
             $table->string('name');
             $table->string('address');
+            $table->string('description')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->string('is_verified')->default(false);
             $table->dateTime('verified_at')->nullable();
             $table->timestamps();

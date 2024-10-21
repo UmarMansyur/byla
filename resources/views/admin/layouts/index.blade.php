@@ -247,6 +247,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.min.css
   <script src="/admin/js/vendor.js"></script>
   <script src="/admin/js/app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.54.0/apexcharts.min.js" integrity="sha512-fsEkf13FMKFZJA3KF4dm/lzU8si2ZXSXwc35yjU+kP0VJiLkbmIBpqIq+4EWcoOO12+UZ1klbynmnjMqFADqUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   @stack('script')
 </body>

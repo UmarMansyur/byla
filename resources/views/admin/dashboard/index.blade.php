@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="alert alert-primary text-truncate mb-3" role="alert">
       Berikut adalah ringkasan data dari sistem kami.
     </div>
@@ -147,7 +147,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="card">
       <div class="card-body">
         <h4>Grafik Transaksi</h4>
@@ -195,7 +195,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($history_transaction as $transaction)
+            {{-- @foreach ($history_transaction as $transaction)
             <tr>
               <td class="ps-3">
                 <a href="order-detail.html">#RB5625</a>
@@ -227,7 +227,7 @@
                 </span>
               </td>
             </tr>
-            @endforeach
+            @endforeach --}}
             @if($history_transaction->isEmpty())
             <tr>
               <td colspan="7" class="text-center">

@@ -12,9 +12,20 @@ class UserWallet extends Model
     protected $fillable = [
         'user_id',
         'kredit',
+        'type',
         'debit',
         'saldo',
-        'type',
+        'kode_transaksi',
+        'kode_bank',
+        'rekening',
+        'rekening_pengirim',
+        'nama',
+        'bukti_pembayaran',
         'status',
+        'keterangan',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

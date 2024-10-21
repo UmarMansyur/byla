@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('thumbnail')->nullable();
+            $table->string('otp')->nullable();
+            $table->dateTime('otp_expired')->nullable();
             $table->date('birthday')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->text('address')->nullable();

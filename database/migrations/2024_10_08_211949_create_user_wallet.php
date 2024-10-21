@@ -18,7 +18,14 @@ return new class extends Migration
             $table->double('debit');
             $table->double('saldo');
             $table->enum('type', ['kredit', 'debit']);
-            $table->enum('status', ['pending', 'success', 'failed']);
+            $table->string('kode_transaksi')->nullable();
+            $table->string('kode_bank')->nullable();
+            $table->string('rekening')->nullable();
+            $table->string('rekening_pengirim')->nullable();
+            $table->string('nama')->nullable();
+            $table->string('bukti_pembayaran')->nullable();
+            $table->enum('status', ['pending', 'success', 'failed', 'rejected']);
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

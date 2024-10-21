@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('merchant_id')->constrained('merchants');
-            $table->foreignId('buyer_id')->constrained('users')->nullable();
+            $table->integer('buyer_id')->cascadeOnDelete()->nullable();
             $table->string('kode_transaksi');
             $table->string('type_transaction');
             $table->dateTime('expired_at');

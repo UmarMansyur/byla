@@ -34,10 +34,13 @@
 async function openScan() {
   try {
     const cameras = await Html5Qrcode.getCameras();
-    if(cameras && cameras.length) {
-      const cameraId = cameras[0].id;
+    if (cameras && cameras.length) {
+      const backCamera = cameras.find(camera => camera.label.toLowerCase().includes('back'));
+      const frontCamera = cameras.find(camera => camera.label.toLowerCase().includes('front'));
+      const selectedCamera = backCamera || frontCamera || cameras[0];
+      
       const html5QrCode = new Html5Qrcode("reader");
-      await html5QrCode.start(cameraId, {
+      await html5QrCode.start(selectedCamera.id, {
         fps: 60,
         qrbox: function(viewfinderWidth, viewfinderHeight) {
           let minEdgePercentage = 0.7; // Use 70% of the smaller dimension
@@ -57,7 +60,16 @@ async function openScan() {
 }
  
 function handleQrCodeResult(result) {
-    alert(`QR Code berhasil dipindai: ${result}`);
+  if(result.startsWith('By') || result.startsWith('USR')) {
+    window.location.href = `/transfer-qr?kode_user=${result}`;
+    return;
+  }
+  const data = JSON.parse(result);
+  if(data.kode_transaksi) {
+    window.location.href = `/transaction/checkout?kode_transaksi=${data.kode_transaksi}`;
+  } else {
+    alert('QR Code tidak valid');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

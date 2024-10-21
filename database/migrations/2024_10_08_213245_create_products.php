@@ -20,6 +20,7 @@ return new class extends Migration
             $table->double('sale_price');
             $table->string('thumbnail');
             $table->text('description');
+            $table->integer('stock')->default(0);
             $table->timestamps();
         });
     }

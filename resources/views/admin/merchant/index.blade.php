@@ -117,7 +117,7 @@
          { data: 'merchant_code' },
         { data: 'name' },
         { data: 'address' },
-        { data: 'is_verified' },
+        { data: 'status' },
         { data: 'action', orderable: false, searchable: false, className: 'text-center' },
       ],
       rowCallback: function(row, data) {
@@ -159,6 +159,17 @@
 
   function detail(id) {
     $('#id').val(id);
+  }
+
+  function updateStatus(id, status) {
+    $.ajax({
+      url: "{{ route('admin.merchant.update-status', ['id' => ':id']) }}".replace(':id', id),
+      type: "PUT",
+      data: {
+        _token: "{{ csrf_token() }}",
+        status: status,
+      },
+    });
   }
 </script>
 @endpush

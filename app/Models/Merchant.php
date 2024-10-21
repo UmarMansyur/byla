@@ -15,6 +15,8 @@ class Merchant extends Model
         'merchant_code',
         'name',
         'address',
+        'description',
+        'thumbnail',
         'is_verified',
         'verified_at',
     ];

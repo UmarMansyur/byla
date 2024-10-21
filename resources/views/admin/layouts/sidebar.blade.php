@@ -36,24 +36,32 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/admin/transaksi">
+                <a class="nav-link" href="/admin/transfer-topup">
                   <span class="nav-icon">
                     <iconify-icon icon="solar:wallet-bold-duotone"></iconify-icon>
                   </span>
-                  <span class="nav-text">Transaksi</span>
+                  <span class="nav-text">Top Up</span>
                 </a>
               </li>
-              <li class="nav-item">
+             <li class="nav-item">
+                <a class="nav-link" href="/admin/transfer">
+                  <span class="nav-icon">
+                    <iconify-icon icon="solar:money-bag-bold-duotone"></iconify-icon>
+                  </span>
+                  <span class="nav-text">Transfer</span>
+                </a>
+              </li>
+              {{-- <li class="nav-item">
                 <a class="nav-link" href="/admin/laporan-transaksi">
                   <span class="nav-icon">
                     <iconify-icon icon="solar:card-transfer-bold-duotone"></iconify-icon>
                   </span>
                   <span class="nav-text">Laporan Transaksi</span>
                 </a>
-              </li>
+              </li> --}}
 
               <li class="nav-item">
-                <a class="nav-link" href="/admin/setelah-pembayaran">
+                <a class="nav-link" href="/admin/bank">
                   <span class="nav-icon">
                     <iconify-icon icon="solar:banknote-2-bold-duotone"></iconify-icon>
                   </span>

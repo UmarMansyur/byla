@@ -22,11 +22,11 @@
 </head>
 
 <body>
-  <div class="preload preload-container">
+  {{-- <div class="preload preload-container">
     <div class="preload-logo">
       <div class="spinner"></div>
     </div>
-  </div>
+  </div> --}}
   @yield('content')
   <script type="text/javascript" src="/assets/javascript/jquery.min.js"></script>
   <script type="text/javascript" src="/assets/javascript/bootstrap.min.js"></script>

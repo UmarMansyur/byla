@@ -10,6 +10,42 @@
  * preloader
  */
 
+document.addEventListener('DOMContentLoaded', function () {
+  const element = document.getElementById('thumbnail-preview');
+  if(element) {
+    element.addEventListener('click', function () {
+      document.getElementById('thumbnail').click();
+    });
+  }
+  const elementThumbnail = document.getElementById('thumbnail');
+  if(elementThumbnail) {
+    elementThumbnail.addEventListener('change', function () {
+      const img = document.createElement('img');
+      img.id = 'preview-image-thumbnail';
+      if(document.getElementById('preview-image-thumbnail')) {
+        document.getElementById('preview-image-thumbnail').remove();
+      }
+      img.src = URL.createObjectURL(this.files[0]);
+      img.classList.add('img-fluid');
+      document.getElementById('preview-image').appendChild(img);
+      document.getElementById('preview-image').classList.remove('d-none');
+      img.style.maxWidth = '100%';
+      // buatkan saya tombol hapus untuk menghapus gambar
+      const btnHapus = document.createElement('button');
+      // tf-btn btn-danger large mb-3
+      btnHapus.classList.add('tf-btn', 'btn-danger', 'large', 'mb-3');
+      btnHapus.innerHTML = '<i class="icon-close"></i>';
+      btnHapus.innerHTML = 'Hapus';
+      btnHapus.style.color = 'white';
+      document.getElementById('preview-image').appendChild(btnHapus);
+      btnHapus.addEventListener('click', function () {
+        img.remove();
+        btnHapus.remove();
+      });
+    });
+  }
+});
+
 
 
 (function ($) {
