@@ -100,6 +100,7 @@
         </div>
       </div>
       @endif
+      <button class="tf-btn btn-primary" onclick="window.open('{{ route('History Detail Print', ['id' => Crypt::encryptString($transaction->id)]) }}', '_blank')">Cetak</button>
     </div>
   </div>
 </div>

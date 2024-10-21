@@ -122,6 +122,7 @@ Route::group(['middleware' => 'user'], function() {
 
     Route::get('/history', [HistoryController::class, 'history_page'])->name('History Page');
     Route::get('/history/detail/{id}', [HistoryController::class, 'history_detail_page'])->name('History Detail Page');
+    Route::get('/history/detail/print/{id}', [HistoryController::class, 'history_detail_print'])->name('History Detail Print');
     Route::get('/history/download', [HistoryController::class, 'download_excel'])->name('Download Excel');
     Route::get('/history/export', [HistoryController::class, 'export_excel'])->name('Export Excel');
     Route::get('/topup', [TransferController::class, 'topup_page'])->name('Topup Page');

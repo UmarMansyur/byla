@@ -115,4 +115,19 @@ class HistoryController extends Controller
         $qrCode = QrCode::format('svg')->size(250)->generate(json_encode($data));
         return view('pengguna.history.detail', compact('transaction', 'merchant', 'transaction_detail', 'buyer', 'qrCode'));
     }
+
+    public function history_detail_print($id)
+    {
+        $history_id = Crypt::decryptString($id);
+        $transaction = Transaction::find($history_id);
+        $merchant = Merchant::find($transaction->merchant_id);
+        $transaction_detail = DetailTransaction::where('transaction_id', $transaction->id)->get();
+        $buyer = User::where('id', $transaction->buyer_id)->first();
+        $data = [
+            'kode_transaksi' => $transaction->kode_transaksi,
+            'user_code' => $transaction->user->user_code,
+        ];
+        $qrCode = QrCode::format('svg')->size(250)->generate(json_encode($data));
+        return view('pengguna.history.detail_print', compact('transaction', 'merchant', 'transaction_detail', 'buyer', 'qrCode'));
+    }
 }
