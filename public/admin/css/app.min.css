@@ -17,6 +17,8 @@
   --bs-input-focus-border-color: #b0b0bb;
 }
 
+
+
 /* Color system - Dark Mode only */
 html[data-bs-theme=dark], [data-bs-theme=dark] {
   --bs-border-color: #2f3944;

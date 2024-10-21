@@ -177,6 +177,9 @@ class UserAuthentication extends Controller
         try {
             $user = Socialite::driver('google')->user();
             $exist = User::where('email', $user->email)->first();
+            if($exist->type_login !== 'google') {
+                return redirect()->route('Halaman Login Pengguna')->with('error', 'Tampaknya anda tidak bisa login dengan Google. Silahkan login dengan email dan password anda.');
+            }
             if ($exist) {
                 Auth::guard('web')->login($exist);
                 return redirect('/');

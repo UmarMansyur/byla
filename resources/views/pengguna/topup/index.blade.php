@@ -115,7 +115,7 @@
                             <h4 class="secondary_color fw_4">Total</h4>
                             <h2 id="total-topup">Rp. 0</h2>
                         </div>
-                        <button type="submit" class="tf-btn accent large"><i class="icon-secure1"></i>Top Up</button>
+                        <button type="button" class="tf-btn accent large" id="btn-topup-final" onclick="topup_process()"><i class="icon-secure1"></i>Top Up</button>
                     </div>
                 </div>
             </form>
@@ -154,6 +154,11 @@ function onlyNumber() {
   const input = document.querySelector('#saldo');
   input.value = input.value.replace(/\D/g, '').replace(/^0+/, '');
 }
+function topup_process() {
+    document.querySelector('#btn-topup-final').innerHTML = '<i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>Loading...';
+    document.querySelector('#btn-topup-final').disabled = true;
+    document.querySelector('form').submit();
+};
 
 </script>
 @endpush

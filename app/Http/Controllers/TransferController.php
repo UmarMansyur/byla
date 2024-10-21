@@ -110,7 +110,7 @@ class TransferController extends Controller
                 AdminNotification::create([
                     'admin_id' => $a->id,
                     'title' => 'Topup Berhasil',
-                    'url' => route('Topup Success Page'),
+                    'url' => route('Transfer Topup Page'),
                     'thumbnail' => 'https://cdn-icons-png.flaticon.com/512/61/61457.png',
                     'content' => 'Terdapat topup baru dengan kode transaksi ' . $data['kode_transaksi'] . ' dengan nominal ' . number_format($request->saldo, 0, ',', '.') . ' dari ' . $data['nama'],
                     'is_read' => false,

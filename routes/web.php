@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AdminAuthentication;
 use App\Http\Controllers\AdminDashboard;
+use App\Http\Controllers\AdminNotification;
 use App\Http\Controllers\BankAdmin;
 use App\Http\Controllers\BankAdminController;
 use App\Http\Controllers\BankTransfer;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LaporanTopupController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
@@ -60,6 +62,26 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function(){
     Route::get('/transfer/get-data-json', [TransferController::class, 'get_data_transfer_admin_json'])->name('Transfer Get Data JSON');
     Route::post('/transfer/disetujui', [TransferController::class, 'disetujui_transfer'])->name('admin.transfer.disetujui');
     Route::post('/transfer/ditolak', [TransferController::class, 'ditolak_transfer'])->name('admin.transfer.ditolak');
+
+    // admin
+    Route::get('/admin/notifications', [AdminNotification::class, 'index'])->name('admin.notifications');
+    Route::get('/admin/notifications/data', [AdminNotification::class, 'get_data_json'])->name('admin.notifications.data');
+    Route::get('/admin/notifications/read-all', [AdminNotification::class, 'read_all'])->name('admin.notifications.read-all');
+    Route::get('/admin/notifications/read-one/{id}', [AdminNotification::class, 'read_one'])->name('admin.notifications.read-one');
+    Route::get('/admin/notifications/clear-all', [AdminNotification::class, 'clear_all'])->name('admin.notifications.clear-all');
+
+    Route::get('/laporan-transfer', [LaporanTopupController::class, 'index'])->name('admin.laporan-transfer');
+    Route::get('/laporan-transfer/data', [LaporanTopupController::class, 'get_data_json'])->name('admin.laporan-transfer.data');
+
+    // profile
+    Route::get('/admin/profile', [ProfileController::class, 'admin_index'])->name('admin.profile');
+
+    Route::put('/admin/profile/update', [ProfileController::class, 'admin_update_profile'])->name('admin.profile.update');
+
+    Route::put('/admin/profile/update-password', [ProfileController::class, 'admin_update_password'])->name('admin.profile.update-password');
+
+    
+    
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -80,6 +102,7 @@ Route::post('/forgot-password', [UserAuthentication::class, 'forgot_password'])-
 
 Route::get('/reset-password', [UserAuthentication::class, 'reset_password_page'])->name('Reset Password Page');
 Route::post('/reset-password', [UserAuthentication::class, 'reset_password'])->name('Reset Password');
+
 
 
 Route::get('/otp', [UserAuthentication::class, 'otp_page'])->name('OTP Page');

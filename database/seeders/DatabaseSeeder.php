@@ -33,9 +33,9 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => 'User',
-            'user_code' => fake()->unique()->numerify('USR-#####'),
+            'user_code' => fake()->unique()->numerify('ByLa-#####'),
             'password' => Hash::make('user'),
-            'email' => 'user@gmail.com',
+            'email' => 'muhammadumarmansyur2001@gmail.com',
             'phone' => '081234567890',
             'thumbnail' => 'https://ik.imagekit.io/8zmr0xxik/blob_c2rRi4vdU?updatedAt=1709077347010',
             'birthday' => '2000-01-01',

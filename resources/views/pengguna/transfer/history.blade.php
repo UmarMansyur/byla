@@ -66,7 +66,7 @@
           <div class="inner-left">
               <div class="icon-box rgba_primary">
                 @if($transaction->status == 'pending')
-                  <i class="bx bx-transfer text-primary" style="font-size: 20px;"></i>
+                  <i class="bx bx-transfer text-warning" style="font-size: 20px;"></i>
                 @elseif($transaction->status == 'success')
                   <i class="bx bx-check-circle text-success" style="font-size: 20px;"></i>
                 @else
@@ -84,10 +84,22 @@
                   <p>{{ $transaction->updated_at->format('d M Y H:i') }} WIB</p>
               </div>
           </div>
-          @if($transaction->kredit > 0)
+          @if($transaction->kredit > 0 && $transaction->status == 'success')
           <span class="num-val critical_color" style="font-size: 14px !important;">- Rp. {{ number_format($transaction->kredit, 0, ',', '.') }}</span>
-          @else
+          @elseif($transaction->debit > 0 && $transaction->status == 'success')
           <span class="num-val success_color" style="font-size: 14px !important;">+ Rp. {{ number_format($transaction->debit, 0, ',', '.') }}</span>
+          @endif
+          @if($transaction->status == 'pending' && $transaction->kredit > 0)
+          <span class="num-val warning_color" style="font-size: 14px !important;">
+            <h5>Rp. {{ number_format($transaction->kredit, 0, ',', '.') }}</h5>
+            <p>Menunggu Konfirmasi</p>
+          </span>
+          @endif
+          @if($transaction->status == 'pending' && $transaction->debit > 0)
+          <span class="num-val warning_color" style="font-size: 14px !important;">
+            <h5>Rp. {{ number_format($transaction->debit, 0, ',', '.') }}</h5>
+            <p>Menunggu Konfirmasi</p>
+          </span>
           @endif
       </a>
       </div>

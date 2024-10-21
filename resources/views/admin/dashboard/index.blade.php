@@ -1,5 +1,5 @@
 @extends('admin.layouts.index')
-
+@section('title-bar', 'Dashboard')
 @section('title', 'Dashboard')
 
 @section('content')
@@ -152,91 +152,6 @@
       <div class="card-body">
         <h4>Grafik Transaksi</h4>
         <div id="chart"></div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between">
-          <h4 class="card-title">
-            Riwayat Transaksi
-          </h4>
-          <a href="/admin/transaction" class="btn btn-sm btn-soft-primary">
-            <i class="bx bx-plus me-1"></i>Lihat Semua
-          </a>
-        </div>
-      </div>
-      <!-- end card body -->
-      <div class="table-responsive table-centered">
-        <table class="table mb-0">
-          <thead class="bg-light bg-opacity-50">
-            <tr>
-              <th class="ps-3">
-                Kode Transaksi
-              </th>
-              <th>
-                Tanggal Transaksi
-              </th>
-              <th>
-                Pengguna
-              </th>
-              <th>
-                Merchant
-              </th>
-              <th>
-                Nominal
-              </th>
-              <th>
-                Status
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {{-- @foreach ($history_transaction as $transaction)
-            <tr>
-              <td class="ps-3">
-                <a href="order-detail.html">#RB5625</a>
-              </td>
-              <td>29 April 2024</td>
-              <td>
-                <div class="d-flex align-items-center gap-2">
-                  <div class="avatar-sm border rounded-circle overflow-hidden">
-                    <img src="{{ Auth::guard('admin')->user()->thumbnail }}" alt="product-1(1)" class="img-fluid avatar-sm">
-                  </div>
-                  <div>
-                    <h5 class="fs-14 my-0 fw-semibold">
-                      {{ $history_transaction->user->name }}
-                    </h5>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <a href="#!">
-                  {{ $history_transaction->merchant->name }}
-                </a>
-              </td>
-              <td>
-                Rp. {{ number_format($history_transaction->nominal, 0, ',', '.') }}
-              </td>
-              <td>
-                <span class="badge bg-{{ $history_transaction->status == 'success' ? 'success' : ($history_transaction->status == 'pending' ? 'warning' : 'danger') }}">
-                  {{ $history_transaction->status }}
-                </span>
-              </td>
-            </tr>
-            @endforeach --}}
-            @if($history_transaction->isEmpty())
-            <tr>
-              <td colspan="7" class="text-center">
-                Tidak ada data transaksi.
-              </td>
-            </tr>
-            @endif
-          </tbody>
-        </table>
       </div>
     </div>
   </div>

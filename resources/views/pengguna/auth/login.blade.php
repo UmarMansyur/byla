@@ -7,14 +7,14 @@
       @csrf
       <h1>Login</h1>
       @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
+      <div class="alert alert-danger">
+        {{ session('error') }}
+      </div>
       @endif
       @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
+      <div class="alert alert-success">
+        {{ session('success') }}
+      </div>
       @endif
       <div class="group-input mt-3">
         <label for="email">Email</label>
@@ -26,15 +26,27 @@
         <a class="icon-eye password-addon" id="password-addon"></a>
       </div>
       <a href="{{ route('Forgot Password Page') }}" class="auth-forgot-password mt-3">Forgot Password?</a>
-      <button type="submit" class="tf-btn accent large">Sign In</button>
+      <button type="button" id="btn-login" class="tf-btn accent large" onclick="login_process()">Sign In</button>
     </form>
     <div class="auth-line">Atau</div>
     <ul class="bottom socials-login mb-4">
-      <li><a href="{{ route('Login Google') }}"><img src="/assets/images/icon-socials/google.png" alt="image">Lanjutkan dengan Google</a>
+      <li><a href="{{ route('Login Google') }}"><img src="/assets/images/icon-socials/google.png" alt="image">Lanjutkan
+          dengan Google</a>
       </li>
     </ul>
-    <p class="mb-9 fw-3 text-center ">Belum punya akun? <a href="{{ route('Halaman Register Pengguna') }}" class="auth-link-rg">Sign Up</a>
+    <p class="mb-9 fw-3 text-center ">Belum punya akun? <a href="{{ route('Halaman Register Pengguna') }}"
+        class="auth-link-rg">Sign Up</a>
     </p>
   </div>
 </div>
 @endsection
+
+@push('script')
+<script>
+  function login_process() {
+    document.querySelector('#btn-login').innerHTML = '<i class="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>Loading...';
+    document.querySelector('#btn-login').disabled = true;
+    document.querySelector('form').submit();
+  }
+</script>
+@endpush

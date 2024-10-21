@@ -51,14 +51,14 @@
                   <span class="nav-text">Transfer</span>
                 </a>
               </li>
-              {{-- <li class="nav-item">
-                <a class="nav-link" href="/admin/laporan-transaksi">
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/laporan-transfer">
                   <span class="nav-icon">
-                    <iconify-icon icon="solar:card-transfer-bold-duotone"></iconify-icon>
+                    <iconify-icon icon="mingcute:transfer-4-fill"></iconify-icon>
                   </span>
-                  <span class="nav-text">Laporan Transaksi</span>
+                  <span class="nav-text">Laporan Transfer/Top Up</span>
                 </a>
-              </li> --}}
+              </li>
 
               <li class="nav-item">
                 <a class="nav-link" href="/admin/bank">

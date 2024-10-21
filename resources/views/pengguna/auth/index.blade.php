@@ -19,6 +19,8 @@
   {{-- @vite('resources/js/app.js') --}}
   <link rel="stylesheet" type="text/css" href="/assets/styles/styles.css" />
   <link rel="apple-touch-icon" sizes="192x192" href="/assets/images/logo.png">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 
 <body>
@@ -33,6 +35,7 @@
   <script type="text/javascript" src="/assets/javascript/password-addon.js"></script>
   <script type="text/javascript" src="/assets/javascript/main.js"></script>
   <script type="text/javascript" src="/assets/javascript/init.js"></script>
+  @stack('script')
 </body>
 
 </html>

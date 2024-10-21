@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $table = 'admin';
     protected $fillable = [
@@ -24,4 +24,9 @@ class Admin extends Authenticatable
         'gender',
         'address',
     ];
+
+    public function notifications()
+    {
+        return $this->hasMany(AdminNotification::class, 'admin_id', 'id');
+    }
 }
